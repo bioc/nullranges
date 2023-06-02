@@ -1,3 +1,8 @@
+# nullranges 1.6.2
+
+* Remove ks dependency (moved to Suggests) for rejection
+  sampling.
+
 # nullranges 1.5.19
 
 * Remove speedglm dependency as it was removed from CRAN
