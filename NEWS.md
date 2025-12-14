@@ -1,3 +1,7 @@
+# nullranges 1.16.2
+
+* Removing mariner dependency to build safely.
+
 # nullranges 1.13.1
 
 * Removing unevaluated code in vignette

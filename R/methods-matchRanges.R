@@ -801,44 +801,6 @@ as_MatchedDataFrame <- function(x) {
   return(obj)
 }
 
-#' Coerce to ranges/interactions
-#' @param d data from `MatchIt`
-#' @param ranges `GRanges` or `GInteractions` object
-#' @param keep_mcols boolean, whether to keep metadata columns
-#' @param type either "GRanges" or "GInteractions"
-#' @return A `GRanges` or `GInteractions` object depending on `type`
-#' @noRd
-coerceToRanges <- function(d, ranges, keep_mcols, type="GRanges") {
-  
-  if (!requireNamespace("mariner", quietly = TRUE)) {
-    stop("The 'mariner' package is required for this function.")
-  }
-  
-  ## Set coercion function
-  if (type=="GRanges") {
-    FUN <- \(d, mc) as_granges(d, keep_mcols=mc)
-  }
-  if (type=="GInteractions") {
-    FUN <- \(d, mc) mariner::as_ginteractions(d, keep.extra.columns=mc)
-  }
-  
-  ## Coerce to GRanges/GInteractions or add supplied
-  if (is.null(ranges)) {
-    g <- FUN(d, keep_mcols)
-  } else {
-    stopifnot(length(ranges) == nrow(d)) # must be same length
-    if (keep_mcols) {
-      mcols(ranges) <- cbind(mcols(ranges), d)
-    } else {
-      mcols(ranges) <- d
-    }
-    g <- ranges
-  }
-  
-  return(g)
-}
-
-
 #' Coerce `matchit` to `MatchedGRanges`
 #' @inheritParams matchitToMatched
 #' @importFrom plyranges as_granges
